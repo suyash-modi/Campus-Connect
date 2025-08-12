@@ -34,6 +34,25 @@ public class JobController {
         return ResponseEntity.ok(jobService.getAllJobs());
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<List<Job>> getFilteredJobs(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String companyName
+    ) {
+        return ResponseEntity.ok(jobService.getFilteredJobs(title, location, companyName));
+    }
+
+    @GetMapping("/locations")
+    public ResponseEntity<List<String>> getUniqueLocations() {
+        return ResponseEntity.ok(jobService.getUniqueLocations());
+    }
+
+    @GetMapping("/companies")
+    public ResponseEntity<List<String>> getUniqueCompanyNames() {
+        return ResponseEntity.ok(jobService.getUniqueCompanyNames());
+    }
+
     @PostMapping("/{id}/apply")
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<Application> applyToJob(
